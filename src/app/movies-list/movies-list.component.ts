@@ -23,6 +23,7 @@ export class MoviesListComponent implements OnInit {
   totalResults = 0;
   pageSize = 10;
   pageEvent: PageEvent | undefined;
+  isLoadingResults = false;
 
   constructor(private _httpService: HttpService) {}
 
@@ -37,6 +38,7 @@ export class MoviesListComponent implements OnInit {
 
   onSearchMovie(movieTitle: string, pageIndex: number): void {
     // buscando filmes via API
+    this.isLoadingResults = true;
     this._httpService.getMovies(movieTitle, pageIndex).subscribe({
       next: (data: any) => {
         if (data.Response === 'True') {
@@ -60,6 +62,9 @@ export class MoviesListComponent implements OnInit {
       },
       error: (err: any) => {
         console.log(err);
+      },
+      complete: () => {
+        this.isLoadingResults = false;
       },
     });
   }

@@ -9,6 +9,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MoviesListComponent } from './movies-list/movies-list.component';
 
@@ -24,6 +25,7 @@ import { MoviesListComponent } from './movies-list/movies-list.component';
     MatButtonModule,
     MatPaginatorModule,
     ReactiveFormsModule,
+    MatProgressBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
