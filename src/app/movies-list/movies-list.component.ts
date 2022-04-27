@@ -10,6 +10,7 @@ import { HttpService } from '../shared/http.service';
   styleUrls: ['./movies-list.component.scss'],
 })
 export class MoviesListComponent implements OnInit {
+  movie = '';
   movies = [];
   searchField: FormControl = new FormControl();
   displayedColumns: string[] = [
@@ -19,38 +20,53 @@ export class MoviesListComponent implements OnInit {
     'director',
     'imdbRating',
   ];
+  totalResults = 0;
+  pageSize = 10;
+  pageEvent: PageEvent | undefined;
 
   constructor(private _httpService: HttpService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     // usando FormControl para observar as mudanças de valor do input, com intervalo de 1s
     this.searchField.valueChanges
       .pipe(debounceTime(1000), distinctUntilChanged())
       .subscribe((value: string) => {
-        // buscando filmes via API
-        this._httpService.getMovies(value, 1).subscribe({
-          next: (data: any) => {
-            if (data.Response === 'True') {
-              let foundMovies = data.Search;
-              // para cada filme encontrado, buscar pelo id individual na API e adicionar mais detalhes ao objeto encontrado inicialmente (foundMovies)
-              foundMovies.forEach((movie: any) => {
-                this._httpService.getMovieById(movie.imdbID).subscribe({
-                  next: (details: any) => {
-                    movie['Director'] = details['Director'];
-                    movie['imdbRating'] = details['imdbRating'];
-                  },
-                });
-              });
-              // recolhendo resultados finais
-              this.movies = foundMovies;
-            } else {
-              console.log('No movies found');
-            }
-          },
-          error: (err: any) => {
-            console.log(err);
-          },
-        });
+        this.onSearchMovie(value, 1);
       });
+  }
+
+  onSearchMovie(movieTitle: string, pageIndex: number): void {
+    // buscando filmes via API
+    this._httpService.getMovies(movieTitle, pageIndex).subscribe({
+      next: (data: any) => {
+        if (data.Response === 'True') {
+          let foundMovies = data.Search;
+          // para cada filme encontrado, buscar pelo id individual na API e adicionar mais detalhes ao objeto encontrado inicialmente (foundMovies)
+          foundMovies.forEach((movie: any) => {
+            this._httpService.getMovieById(movie.imdbID).subscribe({
+              next: (details: any) => {
+                movie['Director'] = details['Director'];
+                movie['imdbRating'] = details['imdbRating'];
+              },
+            });
+          });
+          // recolhendo resultados finais
+          this.movie = movieTitle;
+          this.movies = foundMovies;
+          this.totalResults = data.totalResults;
+        } else {
+          console.log('No movies found');
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+    });
+  }
+
+  onPageChange(event: PageEvent): void {
+    if (this.movie) {
+      this.onSearchMovie(this.movie, event.pageIndex + 1);
+    }
   }
 }
