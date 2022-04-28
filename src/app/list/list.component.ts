@@ -59,7 +59,11 @@ export class ListComponent implements OnChanges {
           this.totalResults = data.totalResults;
         } else {
           console.log('No movies found');
+          this.movies = [];
+          this.totalResults = 0;
         }
+        // return window to beginning of the list
+        window.scrollTo(0, 0);
       },
       error: (err: any) => {
         console.log(err);

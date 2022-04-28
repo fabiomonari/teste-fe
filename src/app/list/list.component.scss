@@ -2,11 +2,31 @@
 
 :host {
   @include mat.elevation(8);
+  position: relative;
 }
 
-.movies-table {
+.table-header {
+  display: grid;
+  grid-template-rows: 1fr 4px;
+  position: fixed;
+  z-index: 1;
+  right: 40px;
+  width: calc(100% - 80px);
+
+  mat-paginator {
+    grid-row: 1;
+    background: none;
+  }
+
+  mat-progress-bar {
+    grid-row: 2;
+  }
+}
+
+.table-list {
   width: 100%;
   position: relative;
+  padding-top: 60px;
 
   .loader-backdrop {
     position: absolute;
@@ -17,11 +37,35 @@
 
   table {
     width: 100%;
-  }
-}
+    padding: 0 4px;
 
-.poster {
-  height: 100px;
-  width: 70px;
-  margin-top: 5px;
+    .mat-header-cell,
+    .mat-cell {
+      padding: 4px 8px;
+    }
+
+    .mat-column-poster {
+      width: 10%;
+    }
+    .mat-column-title {
+      width: 50%;
+    }
+    .mat-column-year {
+      width: 10%;
+    }
+    .mat-column-director {
+      width: 25%;
+    }
+    .mat-column-imdbRating {
+      width: 5%;
+      color: gold;
+      text-align: center;
+    }
+  }
+
+  .poster {
+    height: 100px;
+    width: 70px;
+    margin-top: 4px;
+  }
 }

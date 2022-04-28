@@ -1,12 +1,27 @@
-<mat-progress-bar
-  mode="indeterminate"
-  *ngIf="isLoadingResults"
-></mat-progress-bar>
+<div class="table-header mat-app-background">
+  <mat-paginator
+    [length]="totalResults"
+    [pageSize]="pageSize"
+    hidePageSize
+    showFirstLastButtons
+    hidePageSize
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
+  <mat-progress-bar
+    mode="indeterminate"
+    *ngIf="isLoadingResults"
+  ></mat-progress-bar>
+</div>
 
-<div class="movies-table">
+<div class="table-list">
   <div class="loader-backdrop" *ngIf="isLoadingResults"></div>
 
   <table mat-table [dataSource]="movies">
+    <!-- Table Header -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
     <!-- Poster Column -->
     <ng-container matColumnDef="poster">
       <th mat-header-cell *matHeaderCellDef>Poster</th>
@@ -46,17 +61,11 @@
       <td mat-cell *matCellDef="let element">{{ element["imdbRating"] }}</td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <!-- No Item Row -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+        😕 Nenhum item encontrado
+      </td>
+    </tr>
   </table>
 </div>
-
-<mat-paginator
-  [length]="totalResults"
-  [pageSize]="pageSize"
-  hidePageSize
-  showFirstLastButtons
-  hidePageSize
-  (page)="onPageChange($event)"
->
-</mat-paginator>
