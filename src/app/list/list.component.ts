@@ -5,11 +5,11 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { HttpService } from '../shared/http.service';
 
 @Component({
-  selector: 'app-movies-list',
-  templateUrl: './movies-list.component.html',
-  styleUrls: ['./movies-list.component.scss'],
+  selector: 'app-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss'],
 })
-export class MoviesListComponent implements OnInit {
+export class ListComponent implements OnInit {
   movie = '';
   movies = [];
   searchField: FormControl = new FormControl();

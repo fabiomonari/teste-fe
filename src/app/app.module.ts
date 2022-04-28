@@ -13,10 +13,12 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MoviesListComponent } from './movies-list/movies-list.component';
+import { ListComponent } from './list/list.component';
+import { HomeComponent } from './home/home.component';
+import { HistoryComponent } from './history/history.component';
 
 @NgModule({
-  declarations: [AppComponent, MoviesListComponent],
+  declarations: [AppComponent, ListComponent, HomeComponent, HistoryComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
