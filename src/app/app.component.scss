@@ -1,0 +1,21 @@
+main {
+  padding: 100px 40px 40px 40px;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 360px;
+}
+
+mat-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+
+  h1 {
+    margin-right: auto;
+  }
+
+  button mat-icon {
+    margin-right: 4px;
+  }
+}
