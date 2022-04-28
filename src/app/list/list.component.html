@@ -1,13 +1,3 @@
-<mat-form-field>
-  <mat-label>Pesquisar Filme</mat-label>
-  <input
-    #searchInput
-    matInput
-    placeholder="Ex. De Volta Para o Futuro"
-    [formControl]="searchField"
-  />
-</mat-form-field>
-
 <mat-progress-bar
   mode="indeterminate"
   *ngIf="isLoadingResults"

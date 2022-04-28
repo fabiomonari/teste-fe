@@ -1,1 +1,11 @@
-<p>home works!</p>
+<mat-form-field appearance="fill">
+  <mat-label>Pesquisar Filme</mat-label>
+  <input
+    #searchInput
+    matInput
+    placeholder="Ex. De Volta Para o Futuro"
+    [formControl]="searchField"
+  />
+</mat-form-field>
+
+<app-list [movie]="movie"></app-list>

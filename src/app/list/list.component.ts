@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
@@ -9,10 +15,8 @@ import { HttpService } from '../shared/http.service';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ListComponent implements OnInit {
-  movie = '';
+export class ListComponent implements OnChanges {
   movies = [];
-  searchField: FormControl = new FormControl();
   displayedColumns: string[] = [
     'poster',
     'title',
@@ -25,15 +29,12 @@ export class ListComponent implements OnInit {
   pageEvent: PageEvent | undefined;
   isLoadingResults = false;
 
+  @Input() movie: string | undefined | null;
+
   constructor(private _httpService: HttpService) {}
 
-  ngOnInit(): void {
-    // usando FormControl para observar as mudanças de valor do input, com intervalo de 1s
-    this.searchField.valueChanges
-      .pipe(debounceTime(1000), distinctUntilChanged())
-      .subscribe((value: string) => {
-        this.onSearchMovie(value, 1);
-      });
+  ngOnChanges(changes: SimpleChanges): void {
+    this.onSearchMovie(changes['movie'].currentValue, 1);
   }
 
   onSearchMovie(movieTitle: string, pageIndex: number): void {
