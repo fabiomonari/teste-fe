@@ -1,19 +1,18 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   Input,
   OnChanges,
-  OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { HttpService } from '../shared/http.service';
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListComponent implements OnChanges {
   movies = [];
