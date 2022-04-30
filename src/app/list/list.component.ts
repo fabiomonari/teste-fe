@@ -39,7 +39,7 @@ export class ListComponent implements OnChanges {
   onSearchMovie(movieTitle: string, pageIndex: number): void {
     // buscando filmes via API
     this.isLoadingResults = true;
-    this._httpService.getMovies(movieTitle, pageIndex).subscribe({
+    this._httpService.getMovieByTitle(movieTitle).subscribe({
       next: (data: any) => {
         if (data.Response === 'True') {
           let foundMovies = data.Search;

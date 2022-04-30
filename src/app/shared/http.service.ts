@@ -15,9 +15,9 @@ export class HttpService {
 
   constructor(private http: HttpClient) {}
 
-  getMovies(movieTitle: string, pageIndex: number): Observable<any> {
+  getMovieByTitle(movieTitle: string): Observable<any> {
     return this.http
-      .get<any>(`${this.API_URL}&type=movie&s=${movieTitle}&page=${pageIndex}`)
+      .get<any>(`${this.API_URL}&type=movie&t=${movieTitle}`)
       .pipe(retry(3), catchError(this.errorHandler));
   }
 

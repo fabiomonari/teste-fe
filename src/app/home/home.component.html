@@ -1,15 +1,46 @@
-<div class="searchInput mat-app-background">
+<div class="movie-search mat-app-background">
   <mat-form-field appearance="fill">
     <mat-label>Pesquisar Filme</mat-label>
     <mat-icon matPrefix>search</mat-icon>
     <input
-      #searchInput
       matInput
-      placeholder="Ex. Back To The Future"
-      [formControl]="searchField"
+      placeholder="Ex. Robocop"
       autofocus
+      #searchInput
+      [formControl]="searchField"
     />
   </mat-form-field>
 </div>
 
-<app-list [movie]="movie"></app-list>
+<ng-template [ngIf]="movie.Response" [ngIfElse]="noresult">
+  <mat-card class="movie-card" [ngSwitch]="movie">
+    <img
+      class="poster"
+      [src]="movie.Poster == 'N/A' ? 'assets/no-image.png' : movie.Poster"
+    />
+    <div class="title">
+      <mat-card-title>{{ movie.Title }}</mat-card-title>
+      <mat-card-subtitle
+        >{{ movie.Year }} • {{ movie.Rated }} •
+        {{ movie.Runtime }}</mat-card-subtitle
+      >
+    </div>
+    <div class="rating">
+      <mat-icon>star</mat-icon
+      ><span>
+        {{ movie.imdbRating }}
+      </span>
+      <span>/ 10</span>
+    </div>
+    <mat-card-content>
+      <p class="genre">{{ movie.Genre }}</p>
+      <p class="plot">{{ movie.Plot }}</p>
+      <ul>
+        <li><span>Direção:</span> {{ movie.Director }}</li>
+        <li><span>Roteiro:</span> {{ movie.Writer }}</li>
+        <li><span>Elenco:</span> {{ movie.Actors }}</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
+<ng-template #noresult>😕 Nenhum filme encontrado</ng-template>
